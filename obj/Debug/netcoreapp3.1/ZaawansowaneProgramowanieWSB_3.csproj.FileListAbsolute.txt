@@ -1,0 +1,14 @@
+D:\Repos\ZaawansowaneProgramowanieWSB_3\bin\Debug\netcoreapp3.1\ZaawansowaneProgramowanieWSB_3.exe
+D:\Repos\ZaawansowaneProgramowanieWSB_3\bin\Debug\netcoreapp3.1\ZaawansowaneProgramowanieWSB_3.deps.json
+D:\Repos\ZaawansowaneProgramowanieWSB_3\bin\Debug\netcoreapp3.1\ZaawansowaneProgramowanieWSB_3.runtimeconfig.json
+D:\Repos\ZaawansowaneProgramowanieWSB_3\bin\Debug\netcoreapp3.1\ZaawansowaneProgramowanieWSB_3.runtimeconfig.dev.json
+D:\Repos\ZaawansowaneProgramowanieWSB_3\bin\Debug\netcoreapp3.1\ZaawansowaneProgramowanieWSB_3.dll
+D:\Repos\ZaawansowaneProgramowanieWSB_3\bin\Debug\netcoreapp3.1\ZaawansowaneProgramowanieWSB_3.pdb
+D:\Repos\ZaawansowaneProgramowanieWSB_3\obj\Debug\netcoreapp3.1\ZaawansowaneProgramowanieWSB_3.csproj.AssemblyReference.cache
+D:\Repos\ZaawansowaneProgramowanieWSB_3\obj\Debug\netcoreapp3.1\ZaawansowaneProgramowanieWSB_3.GeneratedMSBuildEditorConfig.editorconfig
+D:\Repos\ZaawansowaneProgramowanieWSB_3\obj\Debug\netcoreapp3.1\ZaawansowaneProgramowanieWSB_3.AssemblyInfoInputs.cache
+D:\Repos\ZaawansowaneProgramowanieWSB_3\obj\Debug\netcoreapp3.1\ZaawansowaneProgramowanieWSB_3.AssemblyInfo.cs
+D:\Repos\ZaawansowaneProgramowanieWSB_3\obj\Debug\netcoreapp3.1\ZaawansowaneProgramowanieWSB_3.csproj.CoreCompileInputs.cache
+D:\Repos\ZaawansowaneProgramowanieWSB_3\obj\Debug\netcoreapp3.1\ZaawansowaneProgramowanieWSB_3.dll
+D:\Repos\ZaawansowaneProgramowanieWSB_3\obj\Debug\netcoreapp3.1\ZaawansowaneProgramowanieWSB_3.pdb
+D:\Repos\ZaawansowaneProgramowanieWSB_3\obj\Debug\netcoreapp3.1\ZaawansowaneProgramowanieWSB_3.genruntimeconfig.cache
