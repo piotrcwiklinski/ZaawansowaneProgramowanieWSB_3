@@ -1,55 +1,56 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ZaawansowaneProgramowanieWSB_3
 {
-    internal class Program
+    public class Group
     {
-        public class Group
+        public string Name { get; set; }
+        public int StudentCount { get; set; }
+
+        public Dictionary<string, List<DateTime>> TimeTable;
+
+        public Group(string name, int studentCount, Dictionary<string, List<DateTime>> timeTable)
         {
-            public string Name { get; set; }
-            public int StudentCount { get; set; }
+            Name = name;
+            StudentCount = studentCount;
+            TimeTable = timeTable;
 
-            public Dictionary<string, List<DateTime>> TimeTable;
-
-            public Group(string name, int studentCount, Dictionary<string, List<DateTime>> timeTable)
-            {
-                Name = name;
-                StudentCount = studentCount;
-                TimeTable = timeTable;
-
-                Console.WriteLine("Tworzenie grupy o nazwie: {0} zakończone powodzeniem!", name);
-            }
-            public string WypiszPlanZajec()
-            {
-                string s = "";
-                foreach (var item in TimeTable)
-                {
-                    s += "\nPrzedmiot: " + item.Key + " Terminy: ";
-                    string dateList = "";
-                        
-                    foreach (DateTime dateTime in item.Value)
-                            dateList += dateTime.ToString("g") + "; ";
-                    s += dateList;
-                }
-                return s;
-                   
-            }
-            public override string ToString()
-            {
-                string s = "\nGRUPA \"" + this.Name + "\":";
-                s += "\nLiczba Studentów: " + this.StudentCount + ";";
-                s += "\nPLAN ZAJĘĆ: ";
-                s += this.WypiszPlanZajec();
-                return s;
-            }
+            Console.WriteLine("Tworzenie grupy o nazwie: {0} zakończone powodzeniem!", name);
         }
-        public static class TimeTable
+
+        public string WypiszPlanZajec()
         {
-            private static readonly string[] classNames = { "Matematyka Dyskretna", "Programowanie Komputerowe", "Bazy Danych", "Język Angielski", "Statystyka", "Podstawy Prawa" };
-            private static int eachClassSessionsNumber = 2;
-            private static readonly DateTime[] availableDateTimes =
+            string s = "";
+            foreach (var item in TimeTable)
             {
+                s += "\nPrzedmiot: " + item.Key + " Terminy: ";
+                string dateList = "";
+
+                foreach (DateTime dateTime in item.Value)
+                    dateList += dateTime.ToString("g") + "; ";
+                s += dateList;
+            }
+            return s;
+
+        }
+
+        public override string ToString()
+        {
+            string s = "\nGRUPA \"" + Name + "\":";
+            s += "\nLiczba Studentów: " + StudentCount + ";";
+            s += "\nPLAN ZAJĘĆ: ";
+            s += WypiszPlanZajec();
+            return s;
+        }
+    }
+    public static class TimeTable
+    {
+        private static readonly string[] classNames = { "Matematyka Dyskretna", "Programowanie Komputerowe", "Bazy Danych", "Język Angielski", "Statystyka", "Podstawy Prawa" };
+        private static int eachClassSessionsNumber = 4;
+        private static readonly DateTime[] availableDateTimes =
+        {
                 new DateTime(2022 , 10 , 1 , 8 , 0 , 0 ),
                 new DateTime(2022 , 10 , 1 , 11 , 20 , 0 ) ,
                 new DateTime(2022 , 10 , 1 , 14 , 50 , 0 ) ,
@@ -83,100 +84,108 @@ namespace ZaawansowaneProgramowanieWSB_3
                 new DateTime(2022 , 10 , 23 , 14 , 50 , 0 ) ,
                 new DateTime(2022 , 10 , 23 , 18 , 05 , 0 )
             };
-            public static Dictionary<string, List<DateTime>> GenerateRandom()
-            {
-                Dictionary<string, List<DateTime>> result = new Dictionary<string, List<DateTime>>();
-                Random random = new Random();
-                DateTime[] dateTimesCopyBefore = availableDateTimes;
-                DateTime[] dateTimesCopyAfter = new DateTime[dateTimesCopyBefore.Length - 1];
-                int dateTimeCopyIndexCounter = 0;
 
-                foreach ( string className in classNames)
-                {
-                    List<DateTime> tempList = new List<DateTime>();
-                    for( int i = 0; i < eachClassSessionsNumber; i++ )
-                    {
-                        int RandomDateTimeIndex = random.Next( 0, dateTimesCopyBefore.Length - 1 );
-                        tempList.Add( dateTimesCopyBefore[RandomDateTimeIndex] );
-                        for( int j = 0; j < dateTimesCopyBefore.Length; j++)
-                        {
-                            if( j != RandomDateTimeIndex) 
-                            {
-                                dateTimesCopyAfter[dateTimeCopyIndexCounter] = dateTimesCopyBefore[j];
-                                dateTimeCopyIndexCounter++;
-                            }
-                        }
-                        dateTimesCopyBefore = new DateTime[dateTimesCopyAfter.Length];
-                        dateTimesCopyBefore = dateTimesCopyAfter;
-                        dateTimesCopyAfter = new DateTime[dateTimesCopyBefore.Length - 1];
-                        dateTimeCopyIndexCounter = 0;
-                    }
-                    result.Add( className, tempList );
-                }
-                return result;
-            }
-        }
-        public static class CollisionDetection
+        public static Dictionary<string, List<DateTime>> GenerateRandom()
         {
-            private static string report;
-            private static bool collisionDetectionStatus = false;
-            public static void Detect(Group groupA , Group groupB)
+            Dictionary<string, List<DateTime>> result = new Dictionary<string, List<DateTime>>();
+            Random random = new Random();
+            DateTime[] dateTimesCopyBefore = availableDateTimes;
+            DateTime[] dateTimesCopyAfter = new DateTime[dateTimesCopyBefore.Length - 1];
+            int dateTimeCopyIndexCounter = 0;
+
+            foreach (string className in classNames)
             {
-                ValueTuple<string, string> tempSetA = new ValueTuple<string, string>();
-                ValueTuple<string, string> tempSetB = new ValueTuple<string, string>();
-                bool messageFlag = false;
-
-                foreach (var itemA in groupA.TimeTable)
+                List<DateTime> tempList = new List<DateTime>();
+                for (int i = 0; i < eachClassSessionsNumber; i++)
                 {
-                    messageFlag = false;
-                    foreach (var przedmiotA in itemA.Key)
+                    int RandomDateTimeIndex = random.Next(0, dateTimesCopyBefore.Length - 1);
+                    tempList.Add(dateTimesCopyBefore[RandomDateTimeIndex]);
+                    for (int j = 0; j < dateTimesCopyBefore.Length; j++)
                     {
-                        foreach (DateTime dataA in itemA.Value)
+                        if (j != RandomDateTimeIndex)
                         {
-                            tempSetA.Item1 = itemA.Key;
-                            tempSetA.Item2 = dataA.ToString("g");
-
-                            foreach (var itemB in groupB.TimeTable)
-                            {
-                                foreach (var przedmiotB in itemB.Key)
-                                {
-                                    foreach (DateTime dataB in itemB.Value)
-                                    {
-                                        tempSetB.Item1 = itemB.Key;
-                                        tempSetB.Item2 = dataB.ToString("g");
-                                        if (tempSetA.Item1.Equals(tempSetB.Item1) && tempSetA.Item2.Equals(tempSetB.Item2) && !messageFlag)
-                                        {
-                                            string s = "Przedmiot: " + tempSetA.Item1 + ", Data/Godzina: " + tempSetA.Item2;
-                                            report += "\n" + s;
-                                            collisionDetectionStatus = true;
-                                            messageFlag = true;
-                                        }
-                                    }
-                                }
-
-                            }
+                            dateTimesCopyAfter[dateTimeCopyIndexCounter] = dateTimesCopyBefore[j];
+                            dateTimeCopyIndexCounter++;
                         }
+                    }
+                    dateTimesCopyBefore = new DateTime[dateTimesCopyAfter.Length];
+                    dateTimesCopyBefore = dateTimesCopyAfter;
+                    dateTimesCopyAfter = new DateTime[dateTimesCopyBefore.Length - 1];
+                    dateTimeCopyIndexCounter = 0;
+                }
+                tempList.Sort();
+                result.Add(className, tempList);
+            }
+            return result;
+        }
+    }
+
+    public static class CollisionDetection
+    {
+        private static string report;
+        private static bool collisionDetectionStatus = false;
+
+        public static List<ValueTuple<string, string>> TransformTimetableToAList(Group group)
+        {
+            List<ValueTuple<string, string>> result = new List<ValueTuple<string, string>>();
+
+            foreach (var item in group.TimeTable)
+            {
+                foreach (var przedmiot in item.Key)
+                {
+                    foreach (DateTime data in item.Value)
+                    {
+                        result.Add((item.Key, data.ToString("g")));
                     }
                 }
             }
-            public static void Report()
-            {
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine("\n\tRAPORT WYKRYTYCH KOLIZJI: ");
-                if (collisionDetectionStatus)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine(report);
-                } 
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("Nie wykryto żadnych kolizji w planach zajęć wybranych grup.");
-                }
-                Console.ForegroundColor= ConsoleColor.White;
-
-            }
+            return result;
         }
+
+        public static void DetectCollisions(Group groupA, Group groupB)
+        {
+            var listaZajecGrupyA = from zajecia in TransformTimetableToAList(groupA)
+                                   orderby zajecia.Item1 , zajecia.Item2
+                                   select new { zajecia.Item1, zajecia.Item2 };
+
+            var listaZajecGrupyB = from zajecia in TransformTimetableToAList(groupB)
+                                   orderby zajecia.Item1 , zajecia.Item2
+                                   select new { zajecia.Item1, zajecia.Item2 };
+
+            var listaKolizji = listaZajecGrupyA.Intersect(listaZajecGrupyB);
+
+
+            foreach (var zajecia in listaKolizji)
+            {
+                string s = "Przedmiot: " + zajecia.Item1 + " Data/Godzina: " + zajecia.Item2;
+                report += "\n" + s;
+                collisionDetectionStatus = true;
+            }
+
+        }
+
+        public static void ReportCollisions()
+        {
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("\n\tRAPORT WYKRYTYCH KOLIZJI: ");
+            if (collisionDetectionStatus)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(report);
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Nie wykryto żadnych kolizji w planach zajęć wybranych grup.");
+            }
+            Console.ForegroundColor = ConsoleColor.White;
+
+        }
+    }
+
+    internal class Program
+    {
+        
         static void Main(string[] args)
         {
             Console.WriteLine("Test Generowania Grup:");
@@ -191,8 +200,8 @@ namespace ZaawansowaneProgramowanieWSB_3
 
             Console.WriteLine("\nTest Detektora Kolizji:");
 
-                CollisionDetection.Detect(ININ4_PR1, ININ4_PR2);
-                CollisionDetection.Report();
+            CollisionDetection.DetectCollisions(ININ4_PR1, ININ4_PR2);
+            CollisionDetection.ReportCollisions();
         }
     }
 }
